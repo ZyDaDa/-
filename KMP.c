@@ -6,37 +6,37 @@
 #define OK		1
 
 typedef struct{
-	char *ch;	//Ö¸Ïò¶¯Ì¬·ÖÅä´æ´¢ÇøÊ×µØÖ·µÄÖ¸Õë 
-	int length; //´®µÄ³¤¶È 
+	char *ch;	//æŒ‡å‘åŠ¨æ€åˆ†é…å­˜å‚¨åŒºé¦–åœ°å€çš„æŒ‡é’ˆ 
+	int length; //ä¸²çš„é•¿åº¦ 
 }Str;
  
 int strassign(Str *S, char *ch){
-	//½«´®ch±£´æÔÚSËùÖ¸µÄ¿Õ¼ä
+	//å°†ä¸²chä¿å­˜åœ¨Sæ‰€æŒ‡çš„ç©ºé—´
 	int len = 0,i=1;
 	char *c = ch;
 	
 	if(S->ch)
-		free(S->ch);		//ÊÍ·ÅÔ­´®¿Õ¼ä 
-	while(*c){				//Çó´®³¤¶È 
+		free(S->ch);		//é‡Šæ”¾åŸä¸²ç©ºé—´ 
+	while(*c){				//æ±‚ä¸²é•¿åº¦ 
 		++len;
 		++c;
 	}
-	if(len == 0){			//Èô´®³¤ÎªÁãÖ±½Ó·µ»Ø¿Õ´® 
+	if(len == 0){			//è‹¥ä¸²é•¿ä¸ºé›¶ç›´æ¥è¿”å›ç©ºä¸² 
 		S->ch = NULL;
 		S->length = 0;
 		return OK;
 	}
 	else{
-		S->ch = (char *)malloc((len+1)*sizeof(char));//·ÖÅä´®³¤+'\0'µÄ¿Õ¼ä
+		S->ch = (char *)malloc((len+1)*sizeof(char));//åˆ†é…ä¸²é•¿+'\0'çš„ç©ºé—´
 		if(S->ch == NULL)
-			return ERROR;	//ÄÚ´æ·ÖÅäÊ§°Ü 
+			return ERROR;	//å†…å­˜åˆ†é…å¤±è´¥ 
 		else{
-			c = ch;			//ÖØĞÂÖ¸ÏòÊ×µØÖ·
+			c = ch;			//é‡æ–°æŒ‡å‘é¦–åœ°å€
 			for(i=1;i<=len+1;++i){
 				S->ch[i] = *c;
 				++c;
-			} 				//½«×Ö·û´®¸³Öµ 
-			S->length = len;//µÚÒ»¸öÎ»ÖÃ²»´æ´¢
+			} 				//å°†å­—ç¬¦ä¸²èµ‹å€¼ 
+			S->length = len;//ç¬¬ä¸€ä¸ªä½ç½®ä¸å­˜å‚¨
 			S->ch[0] = S->length; 
 			return OK;
 		} 
@@ -44,26 +44,26 @@ int strassign(Str *S, char *ch){
 }
 
 int Str_index(Str str, Str substr){
-	//¼òµ¥Ä£Ê½Æ¥ÅäËã·¨
+	//ç®€å•æ¨¡å¼åŒ¹é…ç®—æ³•
 	int i=1,j=1,k=i;
 	while(i<=str.length && j<=substr.length){
 		if(str.ch[i] == substr.ch[j]){
-			++i;	//µ±Ç°×Ö·ûÆ¥ÅäºóÒÆ 
+			++i;	//å½“å‰å­—ç¬¦åŒ¹é…åç§» 
 			++j;
 		}
-		else{		//µ±Ç°²»Æ¥ÅäkÖ¸ÕëºóÒÆ£¬Ä£Ê½´®ÔÚk´¦´ÓĞÂ±È½Ï 
+		else{		//å½“å‰ä¸åŒ¹é…kæŒ‡é’ˆåç§»ï¼Œæ¨¡å¼ä¸²åœ¨kå¤„ä»æ–°æ¯”è¾ƒ 
 			j=1;
 			i = ++k;
 		}
 	}
 	if(j>substr.length)
-		return k;	//³É¹¦·µ»ØÖ÷´®ÖĞÏàÆ¥ÅäµÄÎ»ÖÃ 
+		return k;	//æˆåŠŸè¿”å›ä¸»ä¸²ä¸­ç›¸åŒ¹é…çš„ä½ç½® 
 	else
 		return 0;
 } 
 
 int KMP(Str str, Str Substr, int *next){
-	//¶Ô substr½øĞĞKMPÆ¥Åä
+	//å¯¹ substrè¿›è¡ŒKMPåŒ¹é…
 	int i=1,j=1;
 	while(i<=str.length && j<=Substr.length){ 
 		if(j==0 || str.ch[i] == Substr.ch[j]){
@@ -82,7 +82,7 @@ int KMP(Str str, Str Substr, int *next){
 }
 
 void getnext(Str str, int *next){
-	//ÇóÄ£Ê½´®strµÄnextÊı×é 
+	//æ±‚æ¨¡å¼ä¸²strçš„nextæ•°ç»„ 
 	int i=1,j=0;
 	next[0] = str.length;
 	next[1] = 0;
@@ -101,25 +101,25 @@ int main(int argc, char *argv[]) {
 	Str s1 = {NULL,0},s2 = {NULL,0};
 	int next[4]; 
 	int i=0;
-	//ÕâÀï±ØĞëÁ½¸ö¶¼Òª³õÊ¼»¯ 
+	//è¿™é‡Œå¿…é¡»ä¸¤ä¸ªéƒ½è¦åˆå§‹åŒ– 
 	strassign(&s1,"aaaa1221  asaas");
-	printf("×Ö·û´®1Îª£º"); 
+	printf("å­—ç¬¦ä¸²1ä¸ºï¼š"); 
 	printf(&s1.ch[1]);
-	printf("\t³¤£º%d \n",s1.length);
+	printf("\té•¿ï¼š%d \n",s1.length);
 
 	strassign(&s2,"122aaaaaaaaa");
-	printf("×Ö·û´®2Îª£º");
+	printf("å­—ç¬¦ä¸²2ä¸ºï¼š");
 	printf(&s2.ch[1]);
-	printf("\t³¤£º%d \n",s2.length);
+	printf("\té•¿ï¼š%d \n",s2.length);
 	
-	printf("¼òµ¥Æ¥Åä½á¹ûÎª£º%d \n",Str_index(s1,s2));
+	printf("ç®€å•åŒ¹é…ç»“æœä¸ºï¼š%d \n",Str_index(s1,s2));
 	getnext(s2, next);
-	printf("nextÊı×éÒÔÇóµÃ\t"); 
+	printf("nextæ•°ç»„ä»¥æ±‚å¾—\t"); 
 	for(;i<4;i++)
 		printf("%d",next[i]);
 	putch('\n');
 	
 	KMP(s1,s2,next);
-	//printf("KMPÆ¥Åä½á¹ûÎª£º%d \n",);
+	//printf("KMPåŒ¹é…ç»“æœä¸ºï¼š%d \n",);
 	return 0;
 }
